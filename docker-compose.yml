@@ -21,6 +21,12 @@ services:
     image: ollama/ollama
     container_name: ollama
 
+    runtime: nvidia
+
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+
     ports:
       - "11434:11434"
 

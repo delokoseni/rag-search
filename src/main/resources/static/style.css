@@ -1,8 +1,9 @@
 body {
     margin: 0;
-    font-family: "Inter", Arial, sans-serif;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
     background: #1e1e1e;
     color: #eaeaea;
+    overflow: hidden;
 }
 
 .app {
@@ -49,18 +50,48 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+
+    background: radial-gradient(
+        circle at top,
+        rgba(255, 255, 255, 0.04),
+        transparent 60%
+    );
 }
 
 .messages {
     width: 60%;
     flex: 1;
+
     overflow-y: auto;
     padding: 20px;
+
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    scrollbar-gutter: stable;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(120,120,120,0.35) transparent;
+}
+
+.messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background: rgba(120,120,120,0.35);
+    border-radius: 20px;
+    transition: background 0.3s ease;
+}
+
+.messages::-webkit-scrollbar-thumb:hover {
+    background: rgba(160,160,160,0.5);
 }
 
 .message {
@@ -68,15 +99,25 @@ body {
     border-radius: 15px;
     max-width: 70%;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+
+    animation: fadeInUp 0.25s ease;
+
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    border: 1px solid rgba(255,255,255,0.06);
+
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 .message.user {
-    background: #2d7dff;
+    background: rgba(45, 125, 255, 0.9);
     align-self: flex-end;
 }
 
 .message.bot {
-    background: #2a2a2a;
+    background: rgba(42, 42, 42, 0.9);
     align-self: flex-start;
 }
 
@@ -85,54 +126,106 @@ body {
     display: flex;
     gap: 10px;
     padding: 20px;
+    align-items: flex-end;
 }
 
-.input-area input {
+.input-area textarea {
     flex: 1;
+
     padding: 12px;
     border-radius: 10px;
     border: none;
     outline: none;
+
     background: #2a2a2a;
     color: white;
+
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+
+    resize: none;
+
+    min-height: 24px;
+    max-height: 144px;
+
+    overflow-y: auto;
+
+    box-sizing: border-box;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(120,120,120,0.35) transparent;
+}
+
+.input-area textarea::-webkit-scrollbar {
+    width: 5px;
+}
+
+.input-area textarea::-webkit-scrollbar-thumb {
+    background: rgba(120,120,120,0.35);
+    border-radius: 10px;
+}
+
+.input-area textarea::placeholder {
+    color: #999;
 }
 
 .input-area button {
-    padding: 12px 20px;
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
     border: none;
-    border-radius: 10px;
+    border-radius: 50%;
+
     background: #3a7cff;
     color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     cursor: pointer;
-    transition: 0.2s;
+
+    transition:
+        background 0.2s,
+        transform 0.15s,
+        box-shadow 0.2s;
+
+    box-shadow: 0 4px 12px rgba(58,124,255,0.35);
 }
 
 .input-area button:hover {
     background: #5590ff;
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 20px rgba(58,124,255,0.4);
 }
 
+.input-area button:active {
+    transform: scale(0.95);
+}
+
+.input-area button svg {
+    width: 20px;
+    height: 20px;
+}
 .empty-state {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+
     font-size: 22px;
     color: #888;
     font-weight: 500;
 }
 
-.input-area input {
-    font-family: "Inter", "Segoe UI", sans-serif;
-}
-
-.input-area button {
-    font-family: "Inter", "Segoe UI", sans-serif;
-    font-weight: 500;
-}
-
 .message.loading {
     display: flex;
-    gap: 4px;
+    gap: 5px;
     align-items: center;
     padding: 14px 16px;
 }
@@ -142,7 +235,9 @@ body {
     height: 6px;
     background: #aaa;
     border-radius: 50%;
-    animation: bounce 1.2s infinite ease-in-out;
+
+    animation: bounce 1.4s infinite ease-in-out;
+    opacity: 0.6;
 }
 
 .dot:nth-child(2) {
@@ -161,5 +256,16 @@ body {
     40% {
         transform: translateY(-6px);
         opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.ollama.OllamaEmbeddingModel;
 
+import java.time.Duration;
+
 /**
  * Конфигурация интеграции с Ollama.
  *
@@ -32,6 +34,7 @@ public class OllamaConfig {
         return OllamaChatModel.builder()
                 .baseUrl(props.url())
                 .modelName(props.chatModel())
+                .timeout(Duration.ofMinutes(5))
                 .build();
     }
 
@@ -48,6 +51,7 @@ public class OllamaConfig {
         return OllamaEmbeddingModel.builder()
                 .baseUrl(props.url())
                 .modelName(props.embeddingModel())
+                .timeout(Duration.ofMinutes(5))
                 .build();
     }
 }

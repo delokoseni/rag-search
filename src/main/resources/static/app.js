@@ -13,6 +13,7 @@ function sendMessage() {
 
     addMessage(text, "user");
     input.value = "";
+    input.style.height = "auto";
 
     const loadingEl = addLoadingMessage();
 
@@ -48,9 +49,11 @@ function addMessage(text, type) {
 sendBtn.addEventListener("click", sendMessage);
 
 input.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
         sendMessage();
     }
+
 });
 
 function addLoadingMessage() {
@@ -68,3 +71,8 @@ function addLoadingMessage() {
 
     return div;
 }
+
+input.addEventListener("input", () => {
+    input.style.height = "auto";
+    input.style.height = input.scrollHeight + "px";
+});
