@@ -1,6 +1,8 @@
 services:
+
   postgres:
     image: pgvector/pgvector:pg17
+    container_name: postgres
 
     environment:
       POSTGRES_DB: rag_search
@@ -9,3 +11,29 @@ services:
 
     ports:
       - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+
+    ports:
+      - "11434:11434"
+
+    volumes:
+      - ollama_data:/root/.ollama
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  postgres_data:
+  ollama_data:
