@@ -5,13 +5,16 @@ const messages = document.getElementById("messages");
 function sendMessage() {
     const text = input.value.trim();
     if (!text) return;
+
     const emptyState = document.getElementById("emptyState");
     if (emptyState) {
         emptyState.remove();
     }
-    addMessage(text, "user");
 
+    addMessage(text, "user");
     input.value = "";
+
+    const loadingEl = addLoadingMessage();
 
     fetch("/api/chat", {
         method: "POST",
@@ -22,7 +25,14 @@ function sendMessage() {
     })
     .then(res => res.json())
     .then(data => {
+
+        loadingEl.remove();
+
         addMessage(data.answer, "bot");
+    })
+    .catch(() => {
+        loadingEl.remove();
+        addMessage("Ошибка при запросе", "bot");
     });
 }
 
@@ -42,3 +52,19 @@ input.addEventListener("keydown", function (e) {
         sendMessage();
     }
 });
+
+function addLoadingMessage() {
+    const div = document.createElement("div");
+    div.classList.add("message", "bot", "loading");
+
+    div.innerHTML = `
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    `;
+
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+
+    return div;
+}
