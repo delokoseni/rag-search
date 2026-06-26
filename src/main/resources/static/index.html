@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>RAG Chat</title>
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+
+        <div class="app">
+
+            <aside class="sidebar">
+                <div class="sidebar-title">История</div>
+
+                <div class="chat-history">
+                    <div class="history-item active">Новый чат</div>
+                    <div class="history-item">Что такое RAG?</div>
+                    <div class="history-item">Ollama настройка</div>
+                </div>
+            </aside>
+
+            <main class="chat-container">
+
+                <div class="messages" id="messages">
+                    <div class="empty-state" id="emptyState">
+                        Привет! Чем могу помочь?
+                    </div>
+                </div>
+
+                <div class="input-area">
+                    <input type="text" id="input" placeholder="Напишите сообщение...">
+                    <button id="sendBtn">Отправить</button>
+                </div>
+
+            </main>
+
+        </div>
+
+        <script src="app.js"></script>
+    </body>
+</html>
