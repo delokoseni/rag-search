@@ -4,6 +4,8 @@ import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.model.ollama.OllamaEmbeddingModel;
 
 /**
  * Конфигурация интеграции с Ollama.
@@ -30,6 +32,22 @@ public class OllamaConfig {
         return OllamaChatModel.builder()
                 .baseUrl(props.url())
                 .modelName(props.chatModel())
+                .build();
+    }
+
+    /**
+     * Embedding модель для преобразования текста в векторы.
+     *
+     * Используется в RAG для:
+     * - поиска похожих документов
+     * - работы с pgvector
+     */
+    @Bean
+    public EmbeddingModel embeddingModel(OllamaProperties props) {
+
+        return OllamaEmbeddingModel.builder()
+                .baseUrl(props.url())
+                .modelName(props.embeddingModel())
                 .build();
     }
 }
