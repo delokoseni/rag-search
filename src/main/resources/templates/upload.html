@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>RAG Upload</title>
+
+    <link rel="stylesheet" href="../css/upload.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="sidebar-title">История</div>
+
+        <div class="chat-history">
+            <div class="history-item">Новый чат</div>
+            <div class="history-item active">
+                Загрузка документов
+            </div>
+        </div>
+    </aside>
+
+    <main class="upload-container">
+
+        <div class="upload-content">
+
+            <div class="upload-header">
+                Добавьте документы для RAG
+            </div>
+
+            <div class="upload-subtitle">
+                PDF, DOC, DOCX, TXT и MD до 50 МБ
+            </div>
+
+            <label class="drop-zone" id="dropZone">
+
+                <input
+                        type="file"
+                        id="fileInput"
+                        multiple
+                        accept=".pdf,.doc,.docx,.txt,.md">
+
+                <div class="upload-icon">
+                    ⬆
+                </div>
+
+                <div class="upload-text">
+                    Перетащите файлы сюда
+                </div>
+
+                <div class="upload-hint">
+                    или нажмите для выбора
+                </div>
+
+            </label>
+
+            <div class="files-list" id="filesList"></div>
+
+            <div class="bottom-panel">
+
+                <div class="upload-status" id="uploadStatus">
+                    Готов к загрузке
+                </div>
+
+                <button id="uploadBtn">
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+
+                        <path d="M12 19V7"/>
+                        <path d="M7 12l5-5 5 5"/>
+
+                    </svg>
+                </button>
+
+            </div>
+
+            <div class="toast" id="toast">
+                Файлы успешно загружены
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="../js/upload.js"></script>
+
+</body>
+</html>
