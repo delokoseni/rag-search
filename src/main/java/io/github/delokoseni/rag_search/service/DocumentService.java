@@ -4,6 +4,7 @@ import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.DocumentSplitter;
 import dev.langchain4j.data.document.splitter.DocumentSplitters;
 import dev.langchain4j.data.segment.TextSegment;
+import io.github.delokoseni.rag_search.dto.ChunkInsert;
 import io.github.delokoseni.rag_search.model.DocumentChunk;
 import io.github.delokoseni.rag_search.repository.DocumentChunkJdbcRepository;
 import io.github.delokoseni.rag_search.repository.DocumentRepository;
@@ -53,17 +54,24 @@ public class DocumentService {
                 List<TextSegment> segments =
                         splitter.split(Document.from(text));
 
+                List<ChunkInsert> inserts = new ArrayList<>();
+
                 for (int i = 0; i < segments.size(); i++) {
 
                     TextSegment segment = segments.get(i);
 
-                    chunkRepository.insert(
-                            document.getId(),
-                            i,
-                            segment.text(),
-                            embeddingService.createEmbedding(segment.text())
+                    inserts.add(
+                            new ChunkInsert(
+                                    document.getId(),
+                                    i,
+                                    segment.text(),
+                                    embeddingService.createEmbedding(segment.text())
+                            )
                     );
+
                 }
+
+                chunkRepository.batchInsert(inserts);
 
             } catch (Exception e) {
 
