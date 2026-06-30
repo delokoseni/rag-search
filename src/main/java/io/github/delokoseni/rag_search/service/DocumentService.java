@@ -5,7 +5,6 @@ import dev.langchain4j.data.document.DocumentSplitter;
 import dev.langchain4j.data.document.splitter.DocumentSplitters;
 import dev.langchain4j.data.segment.TextSegment;
 import io.github.delokoseni.rag_search.dto.ChunkInsert;
-import io.github.delokoseni.rag_search.model.DocumentChunk;
 import io.github.delokoseni.rag_search.repository.DocumentChunkJdbcRepository;
 import io.github.delokoseni.rag_search.repository.DocumentRepository;
 import lombok.RequiredArgsConstructor;
@@ -54,18 +53,19 @@ public class DocumentService {
                 List<TextSegment> segments =
                         splitter.split(Document.from(text));
 
+                List<String> embeddings =
+                        embeddingService.createEmbeddings(segments);
+
                 List<ChunkInsert> inserts = new ArrayList<>();
 
                 for (int i = 0; i < segments.size(); i++) {
-
-                    TextSegment segment = segments.get(i);
 
                     inserts.add(
                             new ChunkInsert(
                                     document.getId(),
                                     i,
-                                    segment.text(),
-                                    embeddingService.createEmbedding(segment.text())
+                                    segments.get(i).text(),
+                                    embeddings.get(i)
                             )
                     );
 
