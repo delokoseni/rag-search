@@ -17,12 +17,30 @@ public class DocumentChunk {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Документ, которому принадлежит данный фрагмент.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "document_id", nullable = false)
+    private Document document;
+
+    /**
+     * Порядковый номер чанка внутри документа.
+     */
+    @Column(nullable = false)
+    private Integer chunkIndex;
+
+    /**
+     * Текст чанка.
+     */
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     /**
-     * Вектор embedding (768-dim для nomic-embed-text)
+     * Векторное представление текста.
+     * nomic-embed-text -> 768 измерений.
      */
-    @Column(columnDefinition = "vector(768)")
-    private PGvector embedding;
+    @Column(columnDefinition = "vector(768)", nullable = false)
+    private String embedding;
+
 }

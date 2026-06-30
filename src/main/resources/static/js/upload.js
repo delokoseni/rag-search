@@ -137,12 +137,14 @@ uploadBtn.addEventListener("click", async () => {
 
         console.log("Отправка файлов:", selectedFiles);
 
-        /*
-        await fetch("/api/upload", {
+        const response = await fetch("/api/upload", {
             method: "POST",
             body: formData
         });
-        */
+
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
 
         uploadStatus.textContent = "Загрузка завершена";
 
