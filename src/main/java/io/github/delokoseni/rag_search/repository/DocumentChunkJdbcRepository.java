@@ -1,6 +1,7 @@
 package io.github.delokoseni.rag_search.repository;
 
 import io.github.delokoseni.rag_search.dto.ChunkInsert;
+import io.github.delokoseni.rag_search.dto.RetrievedChunk;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -58,6 +59,47 @@ public class DocumentChunkJdbcRepository {
 
                 });
 
+    }
+
+    public List<RetrievedChunk> findSimilarChunks(
+            String embedding,
+            int limit
+    ) {
+
+        double maxDistance = 0.35;
+
+        String sql = """
+        SELECT *
+        FROM (
+            SELECT
+                d.id,
+                d.file_name,
+                dc.chunk_index,
+                dc.content,
+                dc.embedding <=> CAST(? AS vector) AS distance
+            FROM document_chunk dc
+            JOIN document d
+                ON d.id = dc.document_id
+        ) result
+        WHERE result.distance <= ?
+        ORDER BY result.distance
+        LIMIT ?
+        """;
+
+        return jdbcTemplate.query(
+                sql,
+                (rs, rowNum) ->
+                        new RetrievedChunk(
+                                rs.getLong("id"),
+                                rs.getString("file_name"),
+                                rs.getInt("chunk_index"),
+                                rs.getString("content"),
+                                rs.getDouble("distance")
+                        ),
+                embedding,
+                maxDistance,
+                limit
+        );
     }
 
 }

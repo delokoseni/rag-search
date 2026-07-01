@@ -27,11 +27,11 @@ public class DocumentService {
     private final EmbeddingService embeddingService;
 
     /**
-     * Разбивает документ на чанки по 500 токенов
-     * с перекрытием 100 токенов.
+     * Разбивает документ на чанки по 200 токенов
+     * с перекрытием 40 токенов.
      */
     private final DocumentSplitter splitter =
-            DocumentSplitters.recursive(500, 100);
+            DocumentSplitters.recursive(200, 40);
 
     @Transactional
     public void process(MultipartFile[] files) {

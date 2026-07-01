@@ -49,7 +49,7 @@ public class EmbeddingService {
     /**
      * Преобразование float[] -> "[0.12,0.45,...]"
      */
-    private String toVectorString(float[] vector) {
+    public String toVectorString(float[] vector) {
 
         StringBuilder builder = new StringBuilder("[");
 
