@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * Пример конфигурации:
  * <pre>
- * ollama.url=http://localhost:11434
+ * ollama.url=<a href="http://localhost:11434">...</a>
  * ollama.chat-model=qwen3:8b
  * ollama.embedding-model=nomic-embed-text
  * </pre>
