@@ -20,24 +20,6 @@ import java.time.Duration;
  */
 @Configuration
 public class OllamaConfig {
-
-    /**
-     * Создаёт ChatModel, который используется во всём приложении
-     * для взаимодействия с LLM (Qwen, LLaMA и др.).
-     *
-     * @param props конфигурация Ollama (URL и модель)
-     * @return настроенный ChatModel
-     */
-    @Bean
-    public ChatModel chatModel(OllamaProperties props) {
-
-        return OllamaChatModel.builder()
-                .baseUrl(props.url())
-                .modelName(props.chatModel())
-                .timeout(Duration.ofMinutes(5))
-                .build();
-    }
-
     /**
      * Embedding модель для преобразования текста в векторы.
      *

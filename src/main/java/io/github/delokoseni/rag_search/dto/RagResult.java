@@ -3,12 +3,7 @@ package io.github.delokoseni.rag_search.dto;
 import java.util.List;
 
 /**
- * Результат выполнения RAG-запроса.
- *
- * Используется как единый объект,
- * содержащий всю информацию,
- * необходимую как для ответа пользователю,
- * так и для последующей оценки качества (RAGAS).
+ * Результат выполнения полного RAG-запроса.
  */
 public record RagResult(
 
@@ -16,11 +11,9 @@ public record RagResult(
 
         String model,
 
-        String prompt,
-
-        String context,
-
         List<RetrievedChunk> chunks,
+
+        String prompt,
 
         String answer
 
