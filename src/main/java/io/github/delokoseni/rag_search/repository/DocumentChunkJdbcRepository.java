@@ -3,6 +3,7 @@ package io.github.delokoseni.rag_search.repository;
 import io.github.delokoseni.rag_search.dto.ChunkInsert;
 import io.github.delokoseni.rag_search.dto.RetrievedChunk;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -39,7 +40,7 @@ public class DocumentChunkJdbcRepository {
 
                     @Override
                     public void setValues(
-                            PreparedStatement ps,
+                            @NonNull PreparedStatement ps,
                             int i
                     ) throws SQLException {
 

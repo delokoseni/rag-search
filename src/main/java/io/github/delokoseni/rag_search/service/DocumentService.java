@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,10 +43,12 @@ public class DocumentService {
 
                 String text = parserService.extractText(file);
 
+                LocalDateTime dt = LocalDateTime.now(ZoneId.systemDefault());
+
                 io.github.delokoseni.rag_search.model.Document document =
                         io.github.delokoseni.rag_search.model.Document.builder()
                                 .fileName(file.getOriginalFilename())
-                                .uploadDate(LocalDateTime.now())
+                                .uploadDate(dt)
                                 .build();
 
                 documentRepository.save(document);
